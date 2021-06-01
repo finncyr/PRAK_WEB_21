@@ -27,6 +27,4 @@ public class TodayController {
         return "index";
     }
 
-    @PostMapping("/formhandler")
-    public void formhandler()
 }
