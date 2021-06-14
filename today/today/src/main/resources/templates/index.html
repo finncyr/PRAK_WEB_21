@@ -6,9 +6,11 @@
     </head>
 
     <body>
-        <h1 th:text="${title}" />
-        <ul>
-            <li th:each="post : ${posts}" th:text="${post.getTitle()}"></li>
-        </ul>
+        <form>
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="fname"><br>
+            <label for="lname">Last name:</label><br>
+            <input type="text" id="lname" name="lname">
+          </form>
     </body>
 </html>

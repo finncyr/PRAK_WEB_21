@@ -15,14 +15,16 @@ public class Post {
     private String title;
     private String text;
     private int steps;
+    private String filename;
 
 
-    public Post(String datum, String title, String text, int steps) {
+    public Post(String datum, String title, String text, int steps, String filename) {
         super();
         this.datum = datum;
         this.title = title;
         this.text = text;
         this.steps = steps;
+        this.filename = filename;
     }
 
     public Post(){
@@ -30,4 +32,8 @@ public class Post {
     }
 
     public String getTitle() {return this.title;}
+    public String getDatum() {return this.datum;}
+    public String getText() {return this.text;}
+    public int getSteps() {return this.steps;}
+    public String getFilename() {return this.filename;}
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +12,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+            <img src="Logo_menu.png" width="112" height="28">
             </a>
         
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -46,6 +46,16 @@
         </nav>
 
     <section class="section is-large">
+      <article th:if="${message}" class="message is-danger">
+        <div class="message-header">
+          <p>Error</p>
+          <button class="delete" aria-label="delete"></button>
+        </div>
+        <div class="message-body" th:text="${message}">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.
+        </div>
+      </article>
+
         <div class="card block">
             <div class="card-content">
               <div class="media">
@@ -54,71 +64,100 @@
                   <p class="subtitle is-6">Geben Sie ihre Daten ein...</p>
                 </div>
               </div>
-          
-              <div class="content">
-                <div class="field">
-                    <label class="label">Datum</label>
-                    <div class="control">
-                      <input class="input" type="text" placeholder="01.01.2000">
-                    </div>
-                  </div>
-                  
+              <form action="/form" method="POST" enctype="multipart/form-data">
+                <div class="content">
                   <div class="field">
-                    <label class="label">Titel</label>
-                    <div class="control">
-                      <input class="input" type="text" placeholder="Titel des Posts">
+                      <label class="label">Datum</label>
+                      <div class="control">
+                        <input class="input" type="text" name="datum" placeholder="01.01.2000">
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div class="field">
-                    <label class="label">Beschreibung</label>
-                    <div class="control">
-                      <textarea class="textarea" placeholder="Ein interessanter Text."></textarea>
+                    
+                    <div class="field">
+                      <label class="label">Titel</label>
+                      <div class="control">
+                        <input class="input" type="text" name="titel" placeholder="Titel des Posts">
+                      </div>
                     </div>
-                  </div>
+                    
+                    <div class="field">
+                      <label class="label">Beschreibung</label>
+                      <div class="control">
+                        <input class="input" name="textfeld" placeholder="Stichpunkte zum Tag."></textarea>
+                      </div>
+                    </div>
 
-                  <div class="field">
-                    <label class="label">Gelaufene Schritte</label>
-                    <div class="control">
-                        <input class="input is-link" type="text" placeholder="Schritte">
+                    <div class="field">
+                      <label class="label">Gelaufene Schritte</label>
+                      <div class="control">
+                          <input class="input is-link" name="steps" type="text" placeholder="Schritte">
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div class="field">
-                    <label class="label">Bild</label>
-                    <div class="control">
-                        <div class="file is-boxed">
-                            <label class="file-label">
-                              <input class="file-input" type="file" name="resume">
-                              <span class="file-cta">
-                                <span class="file-icon">
-                                  <i class="fas fa-upload"></i>
+
+                    <div class="field">
+                      <label class="label">Bild</label>
+                      <div class="control">
+                          <div class="file is-boxed">
+                              <label class="file-label">
+                                <input class="file-input" type="file" name="picture">
+                                <span class="file-cta">
+                                  <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                  </span>
+                                  <span class="file-label">
+                                    Choose a picture…
+                                  </span>
                                 </span>
-                                <span class="file-label">
-                                  Choose a file…
-                                </span>
-                              </span>
-                            </label>
-                          </div>
+                              </label>
+                            </div>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div class="field is-grouped">
-                    <div class="control">
-                      <button class="button is-link">Save Post</button>
+                    
+                    <div class="field is-grouped">
+                      <div class="control">
+                        <button type="submit" class="button is-link">Save Post</button>
+                      </div>
+                      <div class="control">
+                        <button class="button is-link is-light" onclick="location.href='seite1';">Cancel</button>
+                      </div>
                     </div>
-                    <div class="control">
-                      <button class="button is-link is-light">Cancel</button>
-                    </div>
-                  </div>
-              </div>
+                </div>
+              </form>
             </div>
           </div>
     </section>
     <footer class="footer">
         <div class="content has-text-centered">
-          <a class="button is-primary" href="seite1.html">Zurück</a>
+          <a class="button is-primary" href="seite1">Zurück</a>
         </div>
       </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+
+      // Get all "navbar-burger" elements
+      var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+      // Check if there are any navbar burgers
+      if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(function ($el) {
+          $el.addEventListener('click', function () {
+
+            // Get the target from the "data-target" attribute
+            var target = $el.dataset.target;
+            var $target = document.getElementById(target);
+
+            // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+            $el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+
+          });
+        });
+      }
+
+      });
+    </script>
   </body>
 </html>

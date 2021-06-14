@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,8 +10,8 @@
 
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" href="seite1.html">
-            <img src="Logo.png" width="112" height="28">
+            <a class="navbar-item" href="seite1">
+            <img src="Logo_menu.png" width="112" height="28">
             </a>
         
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -35,7 +35,7 @@
             <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                <a class="button is-primary" href="seite3.html">
+                <a class="button is-primary" href="seite3">
                     <strong>New Post</strong>
                 </a>
                 </div>
@@ -50,80 +50,85 @@
         Today - Fitness
       </h1>
     </div>
+    <br />
+    <div class="notification is-success" th:if="${message}">
+      <button class="delete"></button>
+      <p th:text="${message}">Dummy Message</p>
+    </div>
   </section>
 
     <section class="section is-medium">
-        <div class="card block">
+        <div th:each="post: ${posts}" class="card block">
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
                   <figure class="image is-48x48">
-                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                    <img th:src="${post.filename}" alt="Placeholder image">
                   </figure>
                 </div>
                 <div class="media-content">
-                  <p class="title is-4">John Smith</p>
-                  <p class="subtitle is-6">@johnsmith</p>
+                  <p class="title is-4" th:text="${post.getTitle()}">Testpost</p>
+                  <p class="subtitle is-6">@finncyr</p>
                 </div>
               </div>
           
               <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                <a href="#">#css</a> <a href="#">#responsive</a>
+                <p th:text="${post.getText()}"></p>
 
                 <div class="column is-mobile">
                     <div class="column is-half">
-                        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                        <p th:text="${post.getDatum()}"></p>
                     </div>
                     <div class="column">
-                        <progress class="progress is-link" value="30" max="100">30%</progress>
+                        <progress class="progress is-link" th:attr="value=${post.getSteps()}" th:text="${post.getSteps()}" value="0" max="10000">0</progress>
                     </div>
                 </div>
 
               </div>
             </div>
             <footer class="card-footer">
-                <a href="seite2.html" class="card-footer-item">Open</a>
+                <a href="seite2" class="card-footer-item">Open</a>
                 <a href="#" class="card-footer-item">Edit</a>
                 <a href="#" class="card-footer-item">Delete</a>
               </footer>
         </div>
-
-          <div class="card block">
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p class="title is-4">John Smith</p>
-                  <p class="subtitle is-6">@johnsmith</p>
-                </div>
-              </div>
-          
-              <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                <a href="#">#css</a> <a href="#">#responsive</a>
-                <div class="column is-mobile">
-                    <div class="column is-half">
-                        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                    </div>
-                    <div class="column">
-                        <progress class="progress is-link" value="30" max="100">30%</progress>
-                    </div>
-                </div>
-              </div>
-            </div>
-            <footer class="card-footer">
-                <a href="seite2.html" class="card-footer-item">Open</a>
-                <a href="#" class="card-footer-item">Edit</a>
-                <a href="#" class="card-footer-item">Delete</a>
-              </footer>
-          </div>
     </section>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+
+      // Get all "navbar-burger" elements
+      var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+      // Check if there are any navbar burgers
+      if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(function ($el) {
+          $el.addEventListener('click', function () {
+
+            // Get the target from the "data-target" attribute
+            var target = $el.dataset.target;
+            var $target = document.getElementById(target);
+
+            // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+            $el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+
+          });
+        });
+      }
+
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+      (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+        const $notification = $delete.parentNode;
+
+        $delete.addEventListener('click', () => {
+          $notification.parentNode.removeChild($notification);
+        });
+      });
+    });
+    </script>
   </body>
 </html>
