@@ -81,5 +81,6 @@ public class TodayController {
         
             userRepository.save(new Post(datum, title, text, steps, fileName));
             return "redirect:/seite1";
+            
     }
 }
