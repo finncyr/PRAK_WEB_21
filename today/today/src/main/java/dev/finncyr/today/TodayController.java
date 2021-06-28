@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +46,15 @@ public class TodayController {
         model.addAttribute("title", "Posts");
 
         return "seite1";
+    }
+
+    @GetMapping("/seite1/posts/{id}")
+    public String singlePostPage(@PathVariable("id") Long id,Model model) {
+        String temp = "Post Nr " + id.toString();
+        model.addAttribute("title", temp);
+        model.addAttribute("post", userRepository.findById(id).get());
+
+        return "seite2";
     }
 
     @GetMapping("/seite3")

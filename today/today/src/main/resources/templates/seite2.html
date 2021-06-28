@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>Single Post</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
   </head>
   <body>
@@ -11,7 +11,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+            <img src="Logo_menu.png" width="112" height="28">
             </a>
         
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -35,7 +35,7 @@
             <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                <a class="button is-primary" href="seite3.html">
+                <a class="button is-primary" href="seite3">
                     <strong>New Post</strong>
                 </a>
                 </div>
@@ -53,41 +53,39 @@
   </section>
 
     <section class="section is-large">
-        <div class="card block">
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p class="title is-4">John Smith</p>
-                  <p class="subtitle is-6">@johnsmith</p>
-                </div>
-              </div>
-          
-              <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                <a href="#">#css</a> <a href="#">#responsive</a>
-                <br>
-                <div class="block"></div>
-                <p>Schrittziel:</p>
-                <progress class="progress is-primary" value="15" max="100">15%</progress>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-              </div>
+      <div class="card block">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img th:src="${post.getFilename()}" alt="Placeholder image">
+              </figure>
             </div>
-            <footer class="card-footer">
-                <a href="seite2.html" class="card-footer-item">Open</a>
-                <a href="#" class="card-footer-item">Edit</a>
-                <a href="#" class="card-footer-item">Delete</a>
-              </footer>
+            <div class="media-content">
+              <p class="title is-4" th:text="${post.getTitle()}">Testpost</p>
+              <p class="subtitle is-6">@finncyr</p>
+            </div>
           </div>
+      
+          <div class="content">
+            <p th:text="${post.getText()}"></p>
+
+            <div class="column is-mobile">
+                <div class="column is-half">
+                    <p th:text="${post.getDatum()}"></p>
+                </div>
+                <div class="column">
+                    <progress class="progress is-link" th:attr="value=${post.getSteps()}" th:text="${post.getSteps()}" value="0" max="10000">0</progress>
+                </div>
+            </div>
+
+          </div>
+        </div>
+    </div>
     </section>
     <footer class="footer">
         <div class="content has-text-centered">
-          <a class="button is-primary" href="seite1.html">Zurück</a>
+          <a class="button is-primary" href="seite1">Zurück</a>
         </div>
       </footer>
   </body>

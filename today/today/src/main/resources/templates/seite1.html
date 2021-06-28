@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>Today - Fitness</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
   </head>
   <body>
@@ -87,9 +87,9 @@
               </div>
             </div>
             <footer class="card-footer">
-                <a href="seite2" class="card-footer-item">Open</a>
-                <a href="#" class="card-footer-item">Edit</a>
-                <a href="#" class="card-footer-item">Delete</a>
+                <a th:href="@{seite1/posts/{id}(id=${post.getId()})}" class="card-footer-item">Open</a>
+                <a href="#" class="card-footer-item" disabled>Edit</a>
+                <a href="#" class="card-footer-item" disabled>Delete</a>
               </footer>
         </div>
     </section>

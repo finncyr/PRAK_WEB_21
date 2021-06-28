@@ -36,4 +36,5 @@ public class Post {
     public String getText() {return this.text;}
     public int getSteps() {return this.steps;}
     public String getFilename() {return this.filename;}
+    public Long getId() {return this.id;}
 }
