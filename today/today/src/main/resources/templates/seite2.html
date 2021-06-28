@@ -74,6 +74,9 @@
                 <div class="column is-half">
                     <p th:text="${post.getDatum()}"></p>
                 </div>
+                <div class="column is-half">
+                  <p class="has-text-danger" th:text="${post.getSteps().toString()} + ' Schritte wurden gelaufen!'"></p>
+                </div>
                 <div class="column">
                     <progress class="progress is-link" th:attr="value=${post.getSteps()}" th:text="${post.getSteps()}" value="0" max="10000">0</progress>
                 </div>
