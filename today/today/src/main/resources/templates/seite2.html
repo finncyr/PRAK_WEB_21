@@ -11,7 +11,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="https://bulma.io">
-            <img src="Logo_menu.png" width="112" height="28">
+            <img src="../../Logo_menu.png" width="112" height="28">
             </a>
         
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -58,7 +58,7 @@
           <div class="media">
             <div class="media-left">
               <figure class="image is-48x48">
-                <img th:src="${post.getFilename()}" alt="Placeholder image">
+                <img th:src="'../../' + ${post.getFilename()}" alt="Placeholder image">
               </figure>
             </div>
             <div class="media-content">
@@ -85,7 +85,7 @@
     </section>
     <footer class="footer">
         <div class="content has-text-centered">
-          <a class="button is-primary" href="seite1">Zurück</a>
+          <a class="button is-primary" href="../../seite1">Zurück</a>
         </div>
       </footer>
   </body>
