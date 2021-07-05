@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Today - Fitness</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
   </head>
   <body>
 
@@ -27,9 +32,6 @@
                 Home
             </a>
         
-            <a class="navbar-item">
-                Documentation
-            </a>
             </div>
         
             <div class="navbar-end">
@@ -93,6 +95,72 @@
               </footer>
         </div>
     </section>
+
+    <section class="section">
+        <div id="canvasdiv1" class="container is-max-widescreen">
+          <canvas id="chart"></canvas>
+          <script>
+            async function getPosts() {
+              let response = await fetch('http://localhost:8080/api/posts');
+              let jdata = await response.json()
+              return jdata;
+            }
+
+
+            var datamonths = [0,0,0,0,0,0,0,0,0,0,0,0];
+            getPosts().then(jdata => {
+              console.log("JData:");
+              console.log(jdata);
+
+              
+              for(var post in jdata) {
+                const array = jdata[post]["datum"].split(".");
+                const j = parseInt(array[1]);
+                datamonths[j-1] += jdata[post]["steps"];
+              }
+
+              console.log("Datamonths:");
+            console.log(datamonths);
+            
+            const labels = [
+              'Januar',
+              'Februar',
+              'März',
+              'April',
+              'May',
+              'Juni',
+              'Juli',
+              'August',
+              'September',
+              'Oktober',
+              'November',
+              'Dezember'
+            ];
+            const data = {
+              labels: labels,
+              datasets: [{
+                label: 'Monthly Sum',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: datamonths,
+              }]
+            };
+            var ctx = document.getElementById('chart').getContext('2d');
+            const config = {
+              type: 'bar',
+              data,
+              options: {}
+            };
+
+            var monthChart = new Chart(ctx, config);
+            });
+            
+
+          </script>
+        </div>
+    </section>
+
+
     <script>
       document.addEventListener('DOMContentLoaded', function () {
 
