@@ -1,18 +1,30 @@
 package dev.finncyr.today;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,7 +35,8 @@ import dev.finncyr.today.models.UserRepository;
 @Controller
 public class TodayController {
 
-    private final String UPLOAD_DIR = "./src/main/resources/static/";
+    @Value("${upload_base_dir}")
+    private String UPLOAD_DIR = "./src/main/resources/static/";
 
     @Autowired
     private UserRepository userRepository;
@@ -45,8 +58,18 @@ public class TodayController {
 
         model.addAttribute("title", "Posts");
 
+        model.addAttribute("uploadPath", UPLOAD_DIR);
+
         return "seite1";
     }
+
+    @RequestMapping(value = "/{fileName}" , method = RequestMethod.GET, produces = "application/octet-stream") 
+    public ResponseEntity<FileSystemResource> getFile(@PathVariable("fileName") String fileName) {
+        FileSystemResource resource = new FileSystemResource(new File(UPLOAD_DIR, fileName));
+        ResponseEntity<FileSystemResource> responseEntity = new ResponseEntity<>(resource, HttpStatus.OK);
+        return responseEntity;
+    }
+
 
     @GetMapping("/seite1/posts/{id}")
     public String singlePostPage(@PathVariable("id") Long id,Model model) {
@@ -81,7 +104,7 @@ public class TodayController {
             String fileName = StringUtils.cleanPath(picture.getOriginalFilename());
 
             try {
-                Path path = Paths.get(UPLOAD_DIR + fileName);
+                Path path = Paths.get(UPLOAD_DIR, fileName).toAbsolutePath();
                 Files.copy(picture.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 e.printStackTrace();

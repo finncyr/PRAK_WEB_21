@@ -89,7 +89,7 @@
               </div>
             </div>
             <footer class="card-footer">
-                <a th:href="@{seite1/posts/{id}(id=${post.getId()})}" class="card-footer-item">Open</a>
+                <a th:href="@{~/seite1/posts/{id}(id=${post.getId()})}" class="card-footer-item">Open</a>
                 <a href="#" class="card-footer-item" disabled>Edit</a>
                 <a href="#" class="card-footer-item" disabled>Delete</a>
               </footer>
@@ -101,7 +101,7 @@
           <canvas id="chart"></canvas>
           <script>
             async function getPosts() {
-              let response = await fetch('http://localhost:8080/api/posts');
+              let response = await fetch('/api/posts');
               let jdata = await response.json()
               return jdata;
             }

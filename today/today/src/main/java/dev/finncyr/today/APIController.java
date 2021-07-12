@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,8 @@ import dev.finncyr.today.models.UserRepository;
 @RestController
 public class APIController {
 
-    private final String UPLOAD_DIR = "./src/main/resources/static/";
+    @Value("${upload_base_dir}")
+    private String UPLOAD_DIR = "./src/main/resources/static/";
 
     @Autowired
     private UserRepository userRepository;
